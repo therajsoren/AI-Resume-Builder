@@ -11,7 +11,7 @@ const ResumePreview = () => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   console.log(resumeInfo)
   return (
-    <div className="shadow-lg h-full p-14 border-t-[20px]"
+    <div className="shadow-lg h-full p-14 border-t-[20px] rounded-md"
     style={{borderColor: resumeInfo?.themeColor}}>
       <PersonDetailsPreview resumeinfo={resumeInfo} />
       <SummaryPreview  resumeinfo={resumeInfo} />
