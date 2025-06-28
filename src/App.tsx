@@ -1,21 +1,22 @@
-import { useUser } from "@clerk/clerk-react"
-import { Navigate, Outlet } from "react-router-dom"
+import { useUser } from "@clerk/clerk-react";
+import { Navigate, Outlet } from "react-router-dom";
 import Header from "./components/ui/custom/Header";
-
+import { ThemeProvider } from "@/components/ui/custom/theme-provider";
 
 const App = () => {
+  const { isLoaded, isSignedIn } = useUser();
 
-  const{isLoaded, isSignedIn} = useUser();
-  
-  if(!isSignedIn && isLoaded){
-    return <Navigate to={'/auth/sign-in'} />
+  if (!isSignedIn && isLoaded) {
+    return <Navigate to={"/auth/sign-in"} />;
   }
   return (
-    <div>
-      <Header/>
-      <Outlet/>
-    </div>
-  )
-}
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <div>
+        <Header />
+        <Outlet />
+      </div>
+    </ThemeProvider>
+  );
+};
 
-export default App
+export default App;
