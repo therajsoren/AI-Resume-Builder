@@ -12,6 +12,7 @@ import { Loader2, PlusSquare } from "lucide-react";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import GlobalAPI from "../../../service/GlobalAPI";
+import { useNavigate } from "react-router-dom";
 
 interface Placeholder {
   name: string;
@@ -32,13 +33,15 @@ const AddResume = () => {
   const [resumeTitle, setResumeTitle] = useState("");
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
+  
+  const navigaion = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
       setPlaceholderIndex(() => {
         return Math.floor(Math.random() * placeholders.length);
       });
-    }, 5000);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -55,21 +58,22 @@ const AddResume = () => {
     };
     try {
       const res = await GlobalAPI.createResume(data);
-      console.log(res.data.data)
-      if(res){
-        setLoading(true)
+      console.log(res.data.data);
+      if (res) {
+        setLoading(true);
+        navigaion(`/dashboard/resume/${res.data.data.documentId}/edit`);
       }
     } catch (error) {
-        console.log(error)
+      console.log(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
   return (
     <div className="">
       <div
-        className="p-14 py-26 border rounded-lg hover:shadow-md hover:scale-105 transition-all cursor-pointer border-dashed bg-secondary flex items-center justify-center h-[280px] w-[280px] mt-8
+        className="p-14 py-26 border rounded-lg hover:shadow-md hover:scale-105 transition-all cursor-pointer border-dashed bg-secondary flex items-center justify-center h-[280px] w-[280px] mt-4
       "
         onClick={() => setOpenDialog(true)}
       >
